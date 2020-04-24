@@ -12,7 +12,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-moment": "^0.9.7",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "zipcode-to-timezone": "0.0.9"
   },
   "scripts": {
     "start": "react-scripts start",
