@@ -1,14 +1,16 @@
 import React from 'react';
-//import React, { Component } from 'react';
 import './App.css';
-
-//const api_key = process.env.REACT_APP_WEATHER_API_KEY;
+import moment from "moment";
+import Moment from 'react-moment'
+//import "moment-timezone";
+//var moment = require('moment');
 
 class App extends React.Component {
   state = {
     temperature: " ",
     city: " ",
     country: " ",
+    time: " ",
     humidity: " ",
     Low: " ",
     High: " ",
@@ -16,6 +18,22 @@ class App extends React.Component {
     description: "",
     error: ""
   }
+
+  // getTime = () => {
+  //   let time = moment().format("MMMM Do, h:mm a");
+  //   console.log(time);
+  // }
+
+
+
+
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     currentDate: new Date(),
+  //     markedDate: moment(new Date()).format("YYYY-MM-DD")
+  //   };
+  // }
 
   getWeather = async (e) => {
     const zipcode = e.target.elements.zipcode.value;
@@ -32,18 +50,22 @@ class App extends React.Component {
         temperature: response.main.temp,
         city: response.name,
         country: response.sys.country,
+        time: response.getTime,
         humidity: response.main.humidity,
         Low: response.main.temp_min,
         High: response.main.temp_max,
         icon: response.weather[0].icon,
         description: response.weather[0].description,
         error: ""
+
       })
     } else {
       this.setState({
         error: "Please Enter the zipcode ... "
       })
     }
+
+
   }
 
   render() {
@@ -53,11 +75,15 @@ class App extends React.Component {
         <div className="form">
           <Form loadWeather={this.getWeather} />   {/* get information from Form and bring it into the render */}
         </div>
+
         <div className="weather">
+          {/* < Moment format="YYYY/MM/DD" > {this.props.dateToFormat}</Moment> */}
+
           <Forecast
             temperature={this.state.temperature}
             city={this.state.city}
             country={this.state.country}
+            time={this.state.getTime}
             humidity={this.state.humidity}
             Low={this.state.Low}
             High={this.state.High}
@@ -94,71 +120,59 @@ const Form = (props) => {
 const Forecast = (props) => {
   return (
     <div >
-      {props.country && props.city && <p>
-        {props.city}{"   "}{props.country}</p>}
-      {props.temperature && <p> {props.temperature}</p>}
-      {props.Low && <p>Low: {props.Low} High: {props.High} </p>}
+      <p> {props.error}</p>
+      <p class="city">{props.city}{"   "}{props.country}</p>
+
+      {/* <p>{props.getTime}</p> */}
+      <p class="temp">{Math.round(props.temperature)}&deg;</p>
+      <p> {Math.round(props.Low)}&deg;  {Math.round(props.High)}&deg;</p>
       {/* {props.High && <p>High: {props.High}</p>} */}
-      {props.icon && <img src={` http://openweathermap.org/img/w/${props.icon}.png`} alt="weather icon"></img>}
-      {props.humidity && <p>Humidity: {props.humidity} {"%"}</p>}
-      {props.description && <p>Conditions : {props.description}</p>}
-      {props.error && <p> {props.error}</p>}
+      <img src={` http://openweathermap.org/img/w/${props.icon}.png`} />
+      <p> {props.description}</p>
     </div>
   )
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Zach's code
-// getWeather = () => {
-
-//   const zipInput = document.getElementById("zipInput").value;
-
-//   fetch("https://api.openweathermap.org/data/2.5/weather?zip =" + zipInput + ",us&appid=" +
-//     process.env.REACT_APP_WEATHER_API_KEY + "&units=imperial")
-//     .then(function (response) {
-//       if (response.status !== 200) {
-//         console.log("Looks like there was a problem. Status Code: " + response.status);
-//       }
-//     })
-//   return;
+// // timezone
+// const Timezone = ({ reading, degreeType }) => {
+//   let newDate = new Date();
+//   const weekday = reading.dt * 1000
+//   newDate.setTime(weekday)
+//   return (
+//     <p>{moment(newDate).format('MMMM Do, h:mm a')}</p>
+//   )
 // }
 
 
-// class App extends React.Component {
-//   constructor() {
-//     super();
-//     this.state = {}
+// //forecast to display
+// const Forecast = (props) => {
+//   return (
+//     <div >
+//       {props.country && props.city && <p class="city">
+//         {props.city}{"   "}{props.country}</p>}
 
-//   }
-
-//   handleClick = () => {
-//     let zipInput = document.getElementById("zipInput").value;
-//     this.setState({ zip: zipInput });
-
-//   }
-
-//   render() {
-//     return <div>
-//       <input type="text" placeholder="Enter ZIP Code" ></input>
-//       <button onClick={this.getWeather}>Search</button>
-//     </div>;
-//   }
+//       {props.temperature && <p class="temp"> {props.temperature}&deg;F</p>}
+//       {props.Low && <p>Low: {props.Low} &deg;  High: {props.High} &deg;</p>}
+//       {/* {props.High && <p>High: {props.High}</p>} */}
+//       {props.icon && <img src={` http://openweathermap.org/img/w/${props.icon}.png`} />}
+//       {props.description && <p> {props.description}</p>}
+//       {props.humidity && <p>Humidity: {props.humidity} {" %"}</p>}
+//       {props.error && <p> {props.error}</p>}
+//     </div>
+//   )
 // }
-// export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
