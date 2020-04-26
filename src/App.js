@@ -44,9 +44,9 @@ class App extends React.Component {
         city: response.name + ",",
         country: response.sys.country + " | ",
         time: Moment().utcOffset(response.timezone / 60).format("dddd, MMMM Do YYYY |  h:mm A"),
-        humidity: response.main.humidity + "%",
-        Low: Math.round(response.main.temp_min) + "°F",
-        High: Math.round(response.main.temp_max) + "°F",
+        humidity: "Humidity: " + response.main.humidity + "%",
+        Low: "Low: " + Math.round(response.main.temp_min) + "°F",
+        High: "High: " + Math.round(response.main.temp_max) + "°F",
         icon: response.weather[0].icon,
         description: response.weather[0].description,
         error: ""
@@ -117,7 +117,6 @@ const Form = (props) => {
           <input className="radio"
             type="radio"
             name="units"
-            checked="metric"
             value="metric"
           /> Celcius
           </label>

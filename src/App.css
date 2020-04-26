@@ -86,7 +86,7 @@ font-family: Georgia, 'Times New Roman', Times, serif;
 color: black;
 font-size: 20px;
 }
-.high{
+.high, .humidity{
   padding-left:20px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: black;
