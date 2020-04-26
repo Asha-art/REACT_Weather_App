@@ -5,6 +5,7 @@ import Moment from "moment";
 import "moment-timezone";
 
 
+
 class App extends React.Component {
   state = {
     temperature: " ",
@@ -22,6 +23,14 @@ class App extends React.Component {
   getWeather = async (e) => {
     const zipcode = e.target.elements.zipcode.value;
     e.preventDefault();
+
+    // let degUnit = null;
+    // if (document.getElementById("imperial").checked) {
+    //   degUnit = "imperial";
+    // } else {
+    //   degUnit = "metric";
+    // }
+
     const api_call = await fetch("https://api.openweathermap.org/data/2.5/weather?q=" +
       zipcode + ",us&units=imperial&appid=" + process.env.REACT_APP_WEATHER_API_KEY)
 
@@ -31,13 +40,13 @@ class App extends React.Component {
 
     if (zipcode) {
       this.setState({
-        temperature: response.main.temp,
-        city: response.name,
-        country: response.sys.country,
-        time: Moment().utcOffset(response.timezone / 60).format("dddd, MMMM Do YYYY,  h:mm A"),
+        temperature: Math.round(response.main.temp) + "°F",
+        city: response.name + ",",
+        country: response.sys.country + " | ",
+        time: Moment().utcOffset(response.timezone / 60).format("dddd, MMMM Do YYYY |  h:mm A"),
         humidity: response.main.humidity + "%",
-        Low: response.main.temp_min,
-        High: response.main.temp_max,
+        Low: Math.round(response.main.temp_min) + "°F",
+        High: Math.round(response.main.temp_max) + "°F",
         icon: response.weather[0].icon,
         description: response.weather[0].description,
         error: ""
@@ -68,7 +77,7 @@ class App extends React.Component {
             humidity={this.state.humidity}
             Low={this.state.Low}
             High={this.state.High}
-            icon={this.state.icon}
+            icon={<img src={` https://openweathermap.org/img/wn/${this.state.icon}` + ".png"} />}
             description={this.state.description}
             error={this.state.error}
           />
@@ -89,11 +98,32 @@ const Heading = (props) => {
 }
 //form
 const Form = (props) => {
+
   return (
     <form onSubmit={props.loadWeather}>
       <input type="text " name="zipcode" placeholder="Enter the zipcode" />
       <button>Get Weather</button>
-    </form>
+
+      <p > <label>
+        <input className="radio"
+          type="radio"
+          name="units"
+          checked='imperial'
+          value="imperial"
+        />Fahrenheit
+        </label>
+
+        <label>
+          <input className="radio"
+            type="radio"
+            name="units"
+            checked="metric"
+            value="metric"
+          /> Celcius
+          </label>
+      </p>
+
+    </form >
   )
 }
 

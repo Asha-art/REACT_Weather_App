@@ -4,14 +4,13 @@ import React from "react";
 const Forecast = (props) => {
     return (
         <div >
-            <p> {props.error}</p>
-            <p className="city">{props.city}{"   "}{props.country}</p>
-            <p>{props.time}</p>
-            <p className="temp">{Math.round(props.temperature)}&deg;</p>
-            <p> {Math.round(props.Low)}&deg;  {Math.round(props.High)}&deg;</p>
-            <img src={` http://openweathermap.org/img/w/${props.icon}.png`} />
-            <p> {props.humidity}</p>
-            <p> {props.description}</p>
+            <p className="city">{props.city}{"   "}{props.country} {"   "} {props.time}</p>
+            <p className="temp">{props.temperature}
+                {/* <img src={` http://openweathermap.org/img/w/${props.icon}`} /> */}
+                <span className="desc">{props.description}</span></p>
+            <p><span className="low">{props.Low}</span>
+                <span className="high"> {props.High}</span>
+            </p>
         </div>
     )
 }
