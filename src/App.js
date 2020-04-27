@@ -110,8 +110,7 @@ const Form = (props) => {
           name="units"
           checked
           id="imperial"
-        // onClick={props.loadWeather}
-        />imperial
+        />Fahrenheit
         </label>
 
         <label>
@@ -119,8 +118,7 @@ const Form = (props) => {
             type="radio"
             name="units"
             id="metric"
-          // onClick={props.loadWeather}
-          /> metric
+          /> Celsius
           </label>
       </p>
 
