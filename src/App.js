@@ -24,15 +24,15 @@ class App extends React.Component {
     const zipcode = e.target.elements.zipcode.value;
     e.preventDefault();
 
-    // let degUnit = null;
-    // if (document.getElementById("imperial").checked) {
-    //   degUnit = "imperial";
-    // } else {
-    //   degUnit = "metric";
-    // }
+    let degUnit = null;
+    if (document.getElementById("imperial").checked) {
+      degUnit = "imperial";
+    } else {
+      degUnit = "metric";
+    }
 
     const api_call = await fetch("https://api.openweathermap.org/data/2.5/weather?q=" +
-      zipcode + ",us&units=imperial&appid=" + process.env.REACT_APP_WEATHER_API_KEY)
+      zipcode + ",us&units=" + degUnit + "&appid=" + process.env.REACT_APP_WEATHER_API_KEY)
 
     const response = await api_call.json();
     console.log(response.cod);
@@ -40,13 +40,13 @@ class App extends React.Component {
 
     if (zipcode) {
       this.setState({
-        temperature: Math.round(response.main.temp) + "°F",
+        temperature: Math.round(response.main.temp) + "°",
         city: response.name + ",",
         country: response.sys.country + " | ",
         time: Moment().utcOffset(response.timezone / 60).format("dddd, MMMM Do YYYY |  h:mm A"),
         humidity: "Humidity: " + response.main.humidity + "%",
-        Low: "Low: " + Math.round(response.main.temp_min) + "°F",
-        High: "High: " + Math.round(response.main.temp_max) + "°F",
+        Low: "Low: " + Math.round(response.main.temp_min) + "°",
+        High: "High: " + Math.round(response.main.temp_max) + "°",
         icon: response.weather[0].icon,
         description: response.weather[0].description,
         error: ""
@@ -108,17 +108,19 @@ const Form = (props) => {
         <input className="radio"
           type="radio"
           name="units"
-          checked='imperial'
-          value="imperial"
-        />Fahrenheit
+          checked
+          id="imperial"
+        // onClick={props.loadWeather}
+        />imperial
         </label>
 
         <label>
           <input className="radio"
             type="radio"
             name="units"
-            value="metric"
-          /> Celcius
+            id="metric"
+          // onClick={props.loadWeather}
+          /> metric
           </label>
       </p>
 
