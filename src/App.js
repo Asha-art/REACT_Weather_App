@@ -108,7 +108,7 @@ const Form = (props) => {
         <input className="radio"
           type="radio"
           name="units"
-          checked
+          // checked
           id="imperial"
         />Fahrenheit
         </label>
